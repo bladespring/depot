@@ -50,11 +50,25 @@ class LineItemsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to line_item_url(@line_item)
   end
 
+  test "should update line_item via turbo-stream" do
+    patch line_item_url(@line_item), params: { line_item: { quantity: 4 } },
+          as: :turbo_stream
+    assert_response :success
+    @line_item.reload
+    assert_equal 4, @line_item.quantity
+  end
+
   test "should destroy line_item" do
     assert_difference("LineItem.count", -1) do
       delete line_item_url(@line_item)
     end
 
     assert_redirected_to line_items_url
+  end
+
+  test "should destroy line_item via turbo-stream" do
+    assert_difference("LineItem.count", -1) do
+      delete line_item_url(@line_item), as: :turbo_stream
+    end
   end
 end
