@@ -22,6 +22,7 @@ the way to production as Docker transforms the massive leap of
 deploying your app in the cloud into a baby step.
 </p>},
   image_url: "ridocker.jpg",
+  price: 21.49,
 )
 
 Product.create!(
