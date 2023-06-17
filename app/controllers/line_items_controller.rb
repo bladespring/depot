@@ -1,6 +1,6 @@
 class LineItemsController < ApplicationController
   include CurrentCart
-  before_action :set_cart, only: %i[create]
+  before_action :set_cart, only: %i[create update destroy]
   before_action :set_line_item, only: %i[ show edit update destroy ]
 
   # GET /line_items or /line_items.json
@@ -42,6 +42,7 @@ class LineItemsController < ApplicationController
   def update
     respond_to do |format|
       if @line_item.update(line_item_params)
+        format.turbo_stream { render :create }
         format.html { redirect_to line_item_url(@line_item), notice: "Line item was successfully updated." }
         format.json { render :show, status: :ok, location: @line_item }
       else
@@ -56,6 +57,7 @@ class LineItemsController < ApplicationController
     @line_item.destroy
 
     respond_to do |format|
+      format.turbo_stream { render :create }
       format.html { redirect_to line_items_url, notice: "Line item was successfully destroyed." }
       format.json { head :no_content }
     end
@@ -70,6 +72,6 @@ class LineItemsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def line_item_params
-    params.require(:line_item).permit(:product_id)
+    params.require(:line_item).permit(:product_id, :quantity)
   end
 end
