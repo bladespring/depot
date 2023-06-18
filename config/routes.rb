@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   resources :line_items
   resources :carts
   resources :products
+  resources :support_requests, only: %i[index update]
 
   scope "(:locale)" do
     resources :orders
