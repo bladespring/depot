@@ -38,6 +38,7 @@ class OrdersTest < ApplicationSystemTestCase
 
   test "check order and delivery" do
     LineItem.delete_all
+    SupportRequest.delete_all
     Order.delete_all
     visit store_index_url
     click_on "Add to Cart", match: :first
